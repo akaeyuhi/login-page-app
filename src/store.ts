@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
-import { configureStore } from '@reduxjs/toolkit';
 import { useDispatch } from 'react-redux';
+import { configureStore } from '@reduxjs/toolkit';
 
 // /* Create root reducer, containing all features of the application */
 const rootReducer = combineReducers({
