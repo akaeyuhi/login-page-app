@@ -1,6 +1,6 @@
 @font-face {
     font-family: "Lexend Deca";
-    src: url("/assets/fonts/LexendDeca-VariableFont_wght.ttf") format("ttf");
+    src: url("./assets/fonts/LexendDeca-VariableFont_wght.ttf") format("ttf");
 }
 
 * {
@@ -10,5 +10,23 @@
 body {
     margin: 0;
     font-family: Lexend Deca, sans-serif;
-    background-color: #1E1E1E;
+    background-color: #093545;
+    height: 100vh;
+}
+
+
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+}
+
+.footer {
+    background-image: url("./assets/footer.svg");
+    background-color: transparent;
+    height: 111px;
+}
+
+.main {
+    flex: 1 1 auto;
 }
