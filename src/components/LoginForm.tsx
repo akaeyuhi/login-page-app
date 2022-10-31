@@ -12,8 +12,9 @@ export default function LoginForm() {
         placeholder="Password"
         className="main__input"
       />
-      <div className='main__checkbox-container control-group'>
-        <label className='control control-checkbox' htmlFor="remember">Remember me
+      <div className="main__checkbox-container control-group">
+        <label className="control control-checkbox">
+          Remember me
           <input type="checkbox"/>
           <div className='control_indicator'/>
         </label>
