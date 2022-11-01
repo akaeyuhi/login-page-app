@@ -12,16 +12,18 @@ interface AuthState {
 }
 
 export interface AuthResponse {
-  token: string,
-  email: string,
-  id: number,
-  rememberMe?: boolean
+  accessToken: string,
+  user: {
+    email: string,
+    id: number,
+  },
+  rememberMe: 'on' | 'off'
 }
 
 export interface AuthDto {
   email: string,
   password: string,
-  rememberMe: boolean
+  rememberMe: string
 }
 
 const initialState: AuthState = {
@@ -42,23 +44,21 @@ export const authSlice = createSlice({
       state.error = null;
     });
     builder.addCase(loginUser.fulfilled,
-      (state, action: PayloadAction<AuthResponse | undefined>) => {
+      (state, action: PayloadAction<AuthResponse>) => {
         state.loading = false;
-        state.token = action.payload?.token ?
-          action.payload.token :
-          '$2a$10$111NIyp95LN7lg58X9WEu.FCrIIzpsvCJGCAofgtSumemgT/Wqk';
-        state.userId = 0;
-        state.email = 'example@gmail.com';
-        if (action.payload?.rememberMe) {
-          localStorage.setItem(
-            'token',
-            '$2a$10$111NIyp95LN7lg58X9WEu.FCrIIzpsvCJGCAofgtSumemgT/Wqk');
-          localStorage.setItem('email', 'example@gmail.com');
+        console.log(action.payload);
+        state.token = action.payload.accessToken;
+        state.userId = action.payload.user.id;
+        state.email = action.payload.user.email;
+        if (action.payload?.rememberMe === 'on') {
+          localStorage.setItem('token', state.token);
+          localStorage.setItem('email', state.email);
         }
       });
     builder.addCase(loginUser.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.error = action.payload;
+      alert(state.error);
     });
   } });
 
