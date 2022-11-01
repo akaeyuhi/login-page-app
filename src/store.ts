@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux';
 import { useDispatch } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
+import authReducer from './features/slices/authSlice';
+import taskReducer from './features/slices/tasksSlice';
 
-// /* Create root reducer, containing all features of the application */
+
 const rootReducer = combineReducers({
-  // tasks: taskReducer,
-  // auth: authReducer,
+  tasks: taskReducer,
+  auth: authReducer,
 });
 
 const store = configureStore(
@@ -18,4 +20,10 @@ const store = configureStore(
 export type AppDispatch = typeof store.dispatch;
 export const useAppDispatch: () => AppDispatch = useDispatch;
 export type RootState = ReturnType<typeof store.getState>;
+export type AppThunk<ReturnType = void> = ThunkAction<
+ReturnType,
+RootState,
+unknown,
+Action<string>
+>;
 export default store;
