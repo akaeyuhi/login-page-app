@@ -12,7 +12,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     if (token) {
-      navigate('/tasks');
+      navigate('/');
     } else {
       navigate('/login');
     }
@@ -20,7 +20,8 @@ const App: React.FC = () => {
   return (<div className='container'>
     <Routes>
       <Route path='/login' element={<LoginPage />} />
-      <Route path='/tasks' element={<TasksPage />} />
+      <Route path='/' element={<TasksPage />} />
+      <Route path='*' element={<main className="main main__welcome">404 not found</main>} />
     </Routes>
     <Footer />
   </div>);
