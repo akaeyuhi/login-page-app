@@ -1,9 +1,5 @@
 import React from 'react';
-
-export interface TaskDto {
-  text: string,
-  id: number,
-}
+import { TaskDto } from '../features/slices/tasksSlice';
 
 const Task = ({ text }: TaskDto) =>
   <li className="main__list-item">{text}</li>;
