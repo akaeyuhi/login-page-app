@@ -13,9 +13,6 @@ export interface TaskState {
   error: Error | null
 }
 
-interface TaskResponse {
-  data: TaskDto[]
-}
 
 const initialState: TaskState = {
   tasks: [],
@@ -33,13 +30,14 @@ export const taskSlice = createSlice({
       state.error = null;
     });
     builder.addCase(getTasks.fulfilled,
-      (state, action: PayloadAction<TaskResponse | undefined>) => {
+      (state, action: PayloadAction<TaskDto[]>) => {
         state.loading = false;
-        state.tasks = action.payload?.data ? action.payload.data : [];
+        state.tasks = action.payload;
       });
     builder.addCase(getTasks.rejected, (state, action: PayloadAction<any>) => {
       state.loading = false;
       state.error = action.payload;
+      alert(state.error);
     });
   },
 });
