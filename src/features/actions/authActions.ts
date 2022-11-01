@@ -1,27 +1,29 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AuthDto, AuthResponse } from '../slices/authSlice';
+import { AuthDto } from '../slices/authSlice';
 
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async ({ email, rememberMe }: AuthDto, { rejectWithValue }) => {
+  async ({ email, password, rememberMe }: AuthDto, { rejectWithValue }) => {
     try {
-      // const headers = {
-      //   'Content-Type': 'application/json',
-      // };
-      const data: AuthResponse = {
-        token: '',
-        email/*, password*/, rememberMe, id: 0,
+      const headers = {
+        'Content-Type': 'application/json',
       };
-      return data;
-      // return {
-      //   ...await (await fetch('/login', {
-      //     method: 'POST',
-      //     headers,
-      //     body: JSON.stringify(data),
-      //   })).json(),
-      //   rememberMe,
-      // };
+      const data: AuthDto = {
+        email, password, rememberMe,
+      };
+      const response = await fetch('http://localhost:4000/login', {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(data),
+      });
+      if (!response.ok) {
+        return rejectWithValue(await response.json());
+      }
+      return {
+        ...await response.json(),
+        rememberMe,
+      };
     } catch (error: any) {
       if (error.response && error.response.data.message) {
         return rejectWithValue(error.response.data.message);
