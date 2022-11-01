@@ -2,12 +2,10 @@ import React, { useCallback, useRef } from 'react';
 import { useAppDispatch } from '../store';
 import { loginUser } from '../features/actions/authActions';
 import { AuthDto } from '../features/slices/authSlice';
-import { useNavigate } from 'react-router';
 
 export default function LoginForm() {
   const form = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
   const submitHandler = useCallback(async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
@@ -15,10 +13,9 @@ export default function LoginForm() {
     const arg: AuthDto = {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
-      rememberMe: formData.get('remember') as unknown as boolean,
+      rememberMe: formData.get('remember') as string,
     };
     dispatch(loginUser(arg));
-    navigate('/tasks');
   }, []);
 
   return (
@@ -26,7 +23,7 @@ export default function LoginForm() {
       <h2 className='main__welcome'>Welcome</h2>
       <input type='text' id="email" name="email" placeholder="Email" className="main__input"/>
       <input
-        type="text"
+        type="password"
         id="password"
         name="password"
         placeholder="Password"
