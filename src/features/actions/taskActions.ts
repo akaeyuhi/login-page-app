@@ -1,20 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../store';
 
 export const getTasks = createAsyncThunk(
   'tasks/get',
-  async (_, { rejectWithValue }) => {
+  async (token: string | null, { rejectWithValue }) => {
     try {
-      const { token } = useSelector((state: RootState) => state.auth);
       const headers = {
         'Content-Type': 'application/json',
-        'Auth': token ? token : '',
+        'Authorization': `Bearer ${token ? token : ''}`,
       };
-      return await (await fetch('/tasks', {
+      const response = await fetch('http://localhost:4000/tasks', {
         method: 'GET',
         headers,
-      })).json();
+      });
+      if (!response.ok) {
+        return rejectWithValue(await response.json());
+      }
+      return await response.json();
     } catch (error: any) {
       rejectWithValue(error.response);
     }
