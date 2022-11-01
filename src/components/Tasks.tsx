@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import Task  from './Task';
-import { TaskDto } from '../features/slices/tasksSlice';
+import { RootState, useAppDispatch } from '../store';
+import { getTasks } from '../features/actions/taskActions';
+import { useSelector } from 'react-redux';
 
 export default function Tasks() {
-  const taskExample: TaskDto = {
-    text: 'Lorem',
-    id: 1,
-  };
-  const [tasks] = useState(
-    [taskExample],
-  );
+  const dispatch = useAppDispatch();
+  const { tasks } = useSelector((state: RootState) => state.tasks);
+  const { token } = useSelector((state: RootState) => state.auth);
 
+  useEffect(() => {
+    dispatch(getTasks(token));
+  }, []);
 
   return (
     <div className="main__tasks">
