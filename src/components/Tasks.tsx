@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Task, { TaskDto } from './Task';
+import Task  from './Task';
+import { TaskDto } from '../features/slices/tasksSlice';
 
 export default function Tasks() {
   const taskExample: TaskDto = {
